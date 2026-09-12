@@ -1,5 +1,6 @@
 import psutil
 
+
 def get_running_processes():
     processes = []
 
@@ -12,6 +13,7 @@ def get_running_processes():
             continue
 
     return processes
+
 
 def analyze_process(process):
     reasons = []

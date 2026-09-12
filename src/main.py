@@ -1,5 +1,5 @@
-from processes import get_running_processes, analyze_process
-
+from src.logic import get_running_processes, analyze_process
+from src.utils import write_report
 
 def main():
     processes = get_running_processes()
@@ -17,10 +17,13 @@ def main():
             report_lines.append(f"Reasons: {', '.join(reasons)}")
             report_lines.append("")
 
-    with open("reports/process_report.txt", "w") as report_file:
-        report_file.write("\n".join(report_lines))
+    write_report(
+        report_lines,
+        "reports/process_report.txt"
+    )
 
     print("Report created: reports/process_report.txt")
+
 
 if __name__ == "__main__":
     main()
