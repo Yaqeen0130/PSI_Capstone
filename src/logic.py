@@ -44,3 +44,33 @@ def analyze_process(process):
         risk = "NORMAL"
 
     return risk, reasons
+from pathlib import Path
+from datetime import datetime
+
+
+def get_recent_files(directory, limit=20):
+    files = []
+
+    directory = Path(directory)
+
+    for file_path in directory.rglob("*"):
+        if file_path.is_file():
+            try:
+                modified_time = file_path.stat().st_mtime
+
+                files.append({
+                    "path": str(file_path),
+                    "modified_time": modified_time
+                })
+
+            except (PermissionError, OSError):
+                continue
+
+    files.sort(key=lambda file: file["modified_time"], reverse=True)
+
+    for file in files:
+        file["modified_time"] = datetime.fromtimestamp(
+            file["modified_time"]
+        ).isoformat()
+
+    return files[:limit]

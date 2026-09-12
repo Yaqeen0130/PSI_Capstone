@@ -1,11 +1,26 @@
-from src.logic import get_running_processes, analyze_process
-from src.utils import write_report
+from src.logic import get_running_processes, analyze_process, get_recent_files
+from src.utils import write_report, calculate_sha256
+
 
 def main():
     processes = get_running_processes()
+    recent_files = get_recent_files("data")
 
     report_lines = []
+
     report_lines.append(f"Found {len(processes)} running processes.\n")
+
+    report_lines.append("Recent files:")
+
+    for file in recent_files:
+        file_hash = calculate_sha256(file["path"])
+
+        report_lines.append(f"Path: {file['path']}")
+        report_lines.append(f"Modified: {file['modified_time']}")
+        report_lines.append(f"SHA-256: {file_hash}")
+        report_lines.append("")
+
+    report_lines.append("Process triage:")
 
     for process in processes:
         risk, reasons = analyze_process(process)
