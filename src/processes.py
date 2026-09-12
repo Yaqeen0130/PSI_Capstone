@@ -13,7 +13,6 @@ def get_running_processes():
 
     return processes
 
-
 def analyze_process(process):
     reasons = []
 
@@ -37,4 +36,9 @@ def analyze_process(process):
             reasons.append("Executable is running from a temporary folder")
             break
 
-    return reasons
+    if reasons:
+        risk = "REVIEW"
+    else:
+        risk = "NORMAL"
+
+    return risk, reasons

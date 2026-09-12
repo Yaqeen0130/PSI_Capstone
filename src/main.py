@@ -6,13 +6,14 @@ def main():
 
     print(f"Found {len(processes)} running processes.")
 
-    for process in processes[:10]:
-        reasons = analyze_process(process)
+    for process in processes:
+        risk, reasons = analyze_process(process)
 
-        print(process)
+        if risk == "REVIEW":
+            print(process)
+            print(f"  Risk: {risk}")
+            print(f"  Reasons: {', '.join(reasons)}")
 
-        if reasons:
-            print("  Review:", ", ".join(reasons))
-            
+
 if __name__ == "__main__":
     main()
