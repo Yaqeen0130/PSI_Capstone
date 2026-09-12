@@ -1,0 +1,21 @@
+Found 271 running processes.
+
+Process: 
+PID: 188
+Risk: REVIEW
+Reasons: Missing process name, Process status is stopped
+
+Process: LockApp.exe
+PID: 2180
+Risk: REVIEW
+Reasons: Process status is stopped
+
+Process: ShellExperienceHost.exe
+PID: 3740
+Risk: REVIEW
+Reasons: Process status is stopped
+
+Process: SystemSettings.exe
+PID: 19128
+Risk: REVIEW
+Reasons: Process status is stopped
