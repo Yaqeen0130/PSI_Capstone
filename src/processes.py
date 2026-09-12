@@ -1,6 +1,5 @@
 import psutil
 
-
 def get_running_processes():
     processes = []
 
@@ -12,19 +11,30 @@ def get_running_processes():
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             continue
 
-        
     return processes
+
 
 def analyze_process(process):
     reasons = []
 
-    if not process["name"]:
+    name = process.get("name") or ""
+    exe = process.get("exe") or ""
+    status = process.get("status") or ""
+
+    if not name:
         reasons.append("Missing process name")
 
-    if not process["exe"]:
-        reasons.append("Missing executable path")
+    if status != "running":
+        reasons.append(f"Process status is {status}")
 
-    if process["status"] != "running":
-        reasons.append(f"Process status is {process['status']}")
+    suspicious_locations = [
+        "\\AppData\\Local\\Temp\\",
+        "\\Windows\\Temp\\",
+    ]
+
+    for location in suspicious_locations:
+        if location.lower() in exe.lower():
+            reasons.append("Executable is running from a temporary folder")
+            break
 
     return reasons
